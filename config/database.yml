@@ -5,8 +5,8 @@ default: &default
 
 development:
   <<: *default
-  database: blog
-  url: postgresql://localhost/blog?pool=5
+  database: blog_dev
+  url: postgresql://localhost/blog_dev?pool=5
 
 test:
   <<: *default
