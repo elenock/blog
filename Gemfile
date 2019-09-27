@@ -14,8 +14,8 @@ gem 'pry-rails'
 gem 'puma', '~> 3.11'
 gem 'rails', '~> 5.2.3'
 gem 'uglifier'
-#gem 'sidekiq'
-#gem 'faker'
+# gem 'sidekiq'
+# gem 'faker'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
