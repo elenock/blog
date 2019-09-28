@@ -1,32 +1,46 @@
-# frozen_string_literal: true
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
+#
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_190_927_145_057) do
-  enable_extension 'plpgsql'
+ActiveRecord::Schema.define(version: 2019_09_28_111655) do
 
-  create_table 'marks', force: :cascade do |t|
-    t.integer 'level'
-    t.bigint 'post_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['post_id'], name: 'index_marks_on_post_id'
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
+    t.string "body"
+    t.string "ip"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "avg_score", default: 0.0
+    t.integer "score_count", default: 0
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table 'posts', force: :cascade do |t|
-    t.string 'title'
-    t.string 'body'
-    t.string 'ip'
-    t.bigint 'user_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['user_id'], name: 'index_posts_on_user_id'
+  create_table "scores", force: :cascade do |t|
+    t.integer "level"
+    t.bigint "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_scores_on_post_id"
   end
 
-  create_table 'users', force: :cascade do |t|
-    t.string 'login'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "users", force: :cascade do |t|
+    t.string "login"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_foreign_key 'marks', 'posts'
-  add_foreign_key 'posts', 'users'
+  add_foreign_key "posts", "users"
+  add_foreign_key "scores", "posts"
 end

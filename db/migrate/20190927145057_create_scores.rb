@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class CreateMarks < ActiveRecord::Migration[5.2]
+class CreateScores < ActiveRecord::Migration[5.2]
   def change
-    create_table :marks do |t|
+    create_table :scores do |t|
       t.integer :level
 
       t.references :post, foreign_key: true

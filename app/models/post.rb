@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
-  validates :title, presence: true
-  validates :body, presence: true
-  validates :ip, presence: true
-
-  has_many :marks
-  belong_to :users
+  has_many :scores
+  belongs_to :user
 end
