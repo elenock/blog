@@ -8,16 +8,16 @@ class Post::List < AbstractService
 
   def initialize(top:)
     @top = top
-    @post_data = {}
+    @post_data = []
   end
 
   def run
     return AbstractService::FailResult.new('list invalid') unless valid?
 
-    Post.order(:avg_score).limit(top).each do |post|
-      post_data[post.id] = post.attributes
+    Post.order(avg_score: :desc).limit(top).each do |post|
+      post_data << post.attributes
     end
 
-    AbstractService::SuccesResult.new(post)
+    AbstractService::SuccesResult.new(post_data)
   end
 end
