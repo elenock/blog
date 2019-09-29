@@ -39,6 +39,7 @@ group :development do
   gem 'rubocop-config-umbrellio'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'activerecord-import'
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
