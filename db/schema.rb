@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2019_09_28_111655) do
     t.datetime "updated_at", null: false
     t.float "avg_score", default: 0.0
     t.integer "score_count", default: 0
+    t.index ["avg_score"], name: "index_posts_on_avg_score"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
