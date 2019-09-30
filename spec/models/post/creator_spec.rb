@@ -32,11 +32,10 @@ describe Post::Creator do
           login: " #{user.login} test1" }
       end
       it 'post and user create' do
-
         expect do
           result = Post::Creator.new(params).run
           expect(result.success?).to eq(true)
-        end.to change { Post.count && User.count}.by(1)
+        end.to change { Post.count && User.count }.by(1)
         product_last = Post.last
         expect(product_last.title).to eq(params[:title])
         expect(product_last.body).to eq(params[:body])

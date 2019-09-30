@@ -17,4 +17,10 @@ class Api::PostsController < ApplicationController
 
     render_result(result)
   end
+
+  def ip
+    result = Post::Ip.new.run
+
+    render_result(result)
+  end
 end

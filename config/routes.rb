@@ -5,5 +5,6 @@ Rails.application.routes.draw do
     post 'post/create' => 'posts#create'
     post 'score/create' => 'scores#create'
     post 'post/top' => 'posts#top'
+    get 'post/ip' => 'posts#ip'
   end
 end

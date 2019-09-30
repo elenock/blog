@@ -11,8 +11,8 @@ describe Post::List do
       result = Post::List.new(top: 3).run
       expect(result.success?).to eq(true)
       expect(result.data.count).to eq(3)
-      expect(result.data.first).to eq({ title: post_next.title, body: post_next.body })
-      expect(result.data.last).to eq({ title: post_last.title, body: post_last.body })
+      expect(result.data.first).to eq(title: post_next.title, body: post_next.body)
+      expect(result.data.last).to eq(title: post_last.title, body: post_last.body)
     end
   end
 

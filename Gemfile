@@ -34,12 +34,12 @@ group :test do
 end
 
 group :development do
+  gem 'activerecord-import'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'rubocop'
   gem 'rubocop-config-umbrellio'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'activerecord-import'
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
