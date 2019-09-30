@@ -7,7 +7,7 @@ USERS_NUMBER = 100
 POSTS_NUMBER = 200_000
 SCORES_NUMBER = 100
 
-time_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+# time_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
 # Create users
 USERS_NUMBER.times do |i|
@@ -20,7 +20,7 @@ ips = (1..50).map{ Faker::Internet.ip_v4_address }
 posts = []
 POSTS_NUMBER.times do
   posts << {
-             title: Faker::Lorem.word, 
+             title: Faker::Lorem.word,
              body: Faker::Lorem.paragraph(sentence_count: 3),
              ip: ips.sample,
              user_id: rand(1..100)
@@ -33,5 +33,5 @@ SCORES_NUMBER.times do
   Score.create(level: rand(1..5), post_id: rand(1..200_000))
 end
 
-time_end = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-puts time_end - time_start
+# time_end = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+# puts time_end - time_start

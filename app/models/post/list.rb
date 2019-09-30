@@ -15,7 +15,7 @@ class Post::List < AbstractService
     return AbstractService::FailResult.new('list invalid') unless valid?
 
     Post.order(avg_score: :desc).limit(top).each do |post|
-      post_data << post.attributes
+      post_data << { title: post.title, body: post.body }
     end
 
     AbstractService::SuccesResult.new(post_data)
