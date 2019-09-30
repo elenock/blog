@@ -20,14 +20,18 @@ class Score::Creator < AbstractService
     ActiveRecord::Base.with_advisory_lock("create-score-level-for-post-id-#{post.id}") do
       ActiveRecord::Base.transaction do
         score = post.scores.create(post_id: post.id, level: level)
-        post.update(
-          avg_score: (post.avg_score * post.score_count + score.level) /
-                        (post.score_count + 1),
-          score_count: (post.score_count + 1)
-        )
-        # лучше триггерная функция
+        post_update!(score)
       end
     end
     AbstractService::SuccesResult.new(post.avg_score)
+  end
+
+  def post_update!(score)
+    post = Post.find_by(id: score.post_id)
+    post.update(
+        avg_score: (post.avg_score * post.score_count + score.level) /
+                      (post.score_count + 1),
+        score_count: (post.score_count + 1)
+      )
   end
 end
