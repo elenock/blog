@@ -8,11 +8,6 @@ POSTS_NUMBER = 200_000
 SCORES_NUMBER = 5_000
 IP_NUMBER = 50
 
-# USERS_NUMBER = 4
-# POSTS_NUMBER = 200
-# SCORES_NUMBER = 200
-# IP_NUMBER = 5
-
 # time_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
 # Create users
