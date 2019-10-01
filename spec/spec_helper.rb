@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../config/environment', __dir__)
-abort('The Rails environment is running in production mode!') unless Rails.env.test?
+ENV["RAILS_ENV"] ||= "test"
+require File.expand_path("../config/environment", __dir__)
+abort("The Rails environment is running in production mode!") unless Rails.env.test?
 
-require 'rspec/rails'
+require "rspec/rails"
 
 begin
   ActiveRecord::Migration.maintain_test_schema!
-rescue ActiveRecord::PendingMigrationError => e
-  puts e.to_s.strip
+rescue ActiveRecord::PendingMigrationError => error
+  puts error.to_s.strip
   exit 1
 end
 
-Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each(&method(:require))
+Dir[Rails.root.join("spec", "support", "**", "*.rb")].each(&method(:require))
 
 RSpec.configure do |config|
   config.before(:suite) do
@@ -46,7 +46,7 @@ RSpec.configure do |config|
   config.filter_run_when_matching :focus
   # config.example_status_persistence_file_path = "spec/examples.txt"
 
-  config.default_formatter = 'doc' if config.files_to_run.one?
+  config.default_formatter = "doc" if config.files_to_run.one?
 
   # config.profile_examples = 10
   config.order = :random

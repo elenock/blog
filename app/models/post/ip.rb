@@ -9,11 +9,11 @@ class Post::Ip < AbstractService
     @ip_data = []
   end
 
+  # rubocop:disable Metrics/MethodLength
   def run
-    # return AbstractService::FailResult.new('list invalid') unless valid?
     tmp = ActiveRecord::Base.connection.execute(
       sanitize_sql(
-        <<-SQL
+        <<-SQL,
         SELECT
         table4.ip,
         users.login
@@ -42,25 +42,26 @@ class Post::Ip < AbstractService
                       WHERE (Count > 1) ) as table4
         INNER JOIN users ON table4 .user_id = users.id ORDER BY ip;
         SQL
-      )
+      ),
     )
 
-    return AbstractService::FailResult.new('data error') unless tmp.count != 0
+    return AbstractService::FailResult.new("data error") unless tmp.count != 0
 
     user_data = []
-    ip = tmp.first['ip']
+    ip = tmp.first["ip"]
     last = tmp.to_a.last
 
     tmp.map do |string|
-      if ip != string['ip'] || last == string
-        user_data << string['login'] if last == string
+      if ip != string["ip"] || last == string
+        user_data << string["login"] if last == string
         ip_data << { ip: ip, users: user_data }
         user_data = []
-        ip = string['ip']
+        ip = string["ip"]
       end
-      user_data << string['login']
+      user_data << string["login"]
     end
 
     AbstractService::SuccesResult.new(ip_data)
   end
+  # rubocop:enable Metrics/MethodLength
 end

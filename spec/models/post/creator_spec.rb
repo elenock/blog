@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
 describe Post::Creator do
-  context 'valid params' do
+  context "valid params" do
     let!(:user) { create(:user) }
     let(:params) do
-      { title: 'test_title',
-        body: 'test_body',
-        ip: '192.168.0.1',
+      { title: "test_title",
+        body: "test_body",
+        ip: "192.168.0.1",
         login: user.login }
     end
 
-    context 'user exist' do
-      it 'post create' do
+    context "user exist" do
+      it "post create" do
         expect do
           result = Post::Creator.new(params).run
           expect(result.success?).to eq(true)
-        end.to change { Post.count }.by(1)
+        end.to change(Post, :count).by(1)
         product_last = Post.last
         expect(product_last.title).to eq(params[:title])
         expect(product_last.body).to eq(params[:body])
@@ -24,14 +24,15 @@ describe Post::Creator do
       end
     end
 
-    context 'user does not exist' do
+    context "user does not exist" do
       let(:params) do
-        { title: 'test_title',
-          body: 'test_body',
-          ip: '192.168.0.1',
+        { title: "test_title",
+          body: "test_body",
+          ip: "192.168.0.1",
           login: " #{user.login} test1" }
       end
-      it 'post and user create' do
+
+      it "post and user create" do
         expect do
           result = Post::Creator.new(params).run
           expect(result.success?).to eq(true)
@@ -45,19 +46,19 @@ describe Post::Creator do
     end
   end
 
-  context 'invalid params' do
+  context "invalid params" do
     let(:params) do
-      { title: '',
-        body: 'test_body',
-        ip: '192.168.0.1',
-        login: 'user.login' }
+      { title: "",
+        body: "test_body",
+        ip: "192.168.0.1",
+        login: "user.login" }
     end
 
-    it 'post does not create' do
+    it "post does not create" do
       expect do
         result = Post::Creator.new(params).run
         expect(result.fail?).to eq(true)
-      end.not_to change { Post.count }
+      end.not_to change(Post, :count)
     end
   end
 end

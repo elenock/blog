@@ -4,14 +4,14 @@ describe Score::Creator do
   let!(:user) { create(:user) }
   let!(:post) { create(:post, user: user) }
 
-  context 'valid params' do
+  context "valid params" do
     let(:params) { { post_id: post.id, level: 3 } }
 
-    it 'score create' do
+    it "score create" do
       expect do
         result = Score::Creator.new(params).run
         expect(result.success?).to eq(true)
-      end.to change { Score.count }.by(1)
+      end.to change(Score, :count).by(1)
       score_last = Score.last
       post_upd = Post.find_by(id: post.id)
       expect(score_last.post_id).to eq(params[:post_id])
@@ -19,7 +19,7 @@ describe Score::Creator do
       expect(post_upd.score_count).to eq(1)
     end
 
-    it 'post_update with score create' do
+    it "post_update with score create" do
       # let!(:score) { { post_id: post.id, level: 5 } }
       score = Score::Creator.new(params)
       score.post_update!
@@ -28,14 +28,14 @@ describe Score::Creator do
     end
   end
 
-  context 'invalid params' do
-    let(:params) { { post_id: post.id, level: '' } }
+  context "invalid params" do
+    let(:params) { { post_id: post.id, level: "" } }
 
-    it 'score does not create' do
+    it "score does not create" do
       expect do
         result = Score::Creator.new(params).run
         expect(result.fail?).to eq(true)
-      end.not_to change { Score.count }
+      end.not_to change(Score, :count)
     end
   end
 end

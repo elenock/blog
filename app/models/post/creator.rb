@@ -4,6 +4,7 @@ class Post::Creator < AbstractService
   validates :title, presence: true
   validates :body, presence: true
   validates :ip, presence: true
+  validates :login, presence: true
 
   attr_reader :title
   attr_reader :body
@@ -18,12 +19,12 @@ class Post::Creator < AbstractService
   end
 
   def run
-    return AbstractService::FailResult.new('post invalid') unless valid?
+    return AbstractService::FailResult.new("post invalid") unless valid?
 
     user = User.find_by(login: login)
-    user ||= User.create(login: login)
+    user ||= User.create!(login: login)
 
-    post = user.posts.create(title: title, body: body, ip: ip, user_id: user.id)
+    post = user.posts.create!(title: title, body: body, ip: ip, user_id: user.id)
 
     AbstractService::SuccesResult.new(post)
   end

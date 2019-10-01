@@ -6,8 +6,8 @@ describe Post::List do
   let!(:post_next) { create(:post, user: user, avg_score: 5) }
   let!(:post_last) { create(:post, user: user, avg_score: 3) }
 
-  context 'valid params' do
-    it 'list create' do
+  context "valid params" do
+    it "list create" do
       result = Post::List.new(top: 3).run
       expect(result.success?).to eq(true)
       expect(result.data.count).to eq(3)
@@ -16,9 +16,9 @@ describe Post::List do
     end
   end
 
-  context 'invalid params' do
-    it 'list does not create' do
-      result = Post::List.new(top: '').run
+  context "invalid params" do
+    it "list does not create" do
+      result = Post::List.new(top: "").run
       expect(result.fail?).to eq(true)
     end
   end

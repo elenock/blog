@@ -6,7 +6,7 @@ class Api::PostsController < ApplicationController
       title: params[:title],
       body: params[:body],
       ip: params[:ip],
-      login: params[:login]
+      login: params[:login],
     ).run
 
     render_result(result)
