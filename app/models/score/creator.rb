@@ -29,9 +29,9 @@ class Score::Creator < AbstractService
   def post_update!(score)
     post = Post.find_by(id: score.post_id)
     post.update(
-        avg_score: (post.avg_score * post.score_count + score.level) /
-                      (post.score_count + 1),
-        score_count: (post.score_count + 1)
-      )
+      avg_score: (post.avg_score * post.score_count + score.level) /
+                    (post.score_count + 1),
+      score_count: (post.score_count + 1)
+    )
   end
 end

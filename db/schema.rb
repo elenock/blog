@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,38 +12,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_28_111655) do
-
+ActiveRecord::Schema.define(version: 20_190_928_111_655) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "posts", force: :cascade do |t|
-    t.string "title"
-    t.string "body"
-    t.string "ip"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.float "avg_score", default: 0.0
-    t.integer "score_count", default: 0
-    t.index ["avg_score"], name: "index_posts_on_avg_score"
-    t.index ["user_id"], name: "index_posts_on_user_id"
+  create_table 'posts', force: :cascade do |t|
+    t.string 'title'
+    t.string 'body'
+    t.string 'ip'
+    t.bigint 'user_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.float 'avg_score', default: 0.0
+    t.integer 'score_count', default: 0
+    t.index ['avg_score'], name: 'index_posts_on_avg_score'
+    t.index ['user_id'], name: 'index_posts_on_user_id'
   end
 
-  create_table "scores", force: :cascade do |t|
-    t.integer "level"
-    t.bigint "post_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_scores_on_post_id"
+  create_table 'scores', force: :cascade do |t|
+    t.integer 'level'
+    t.bigint 'post_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['post_id'], name: 'index_scores_on_post_id'
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "login"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'users', force: :cascade do |t|
+    t.string 'login'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  add_foreign_key "posts", "users"
-  add_foreign_key "scores", "posts"
+  add_foreign_key 'posts', 'users'
+  add_foreign_key 'scores', 'posts'
 end
