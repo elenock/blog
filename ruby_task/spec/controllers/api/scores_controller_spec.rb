@@ -11,7 +11,7 @@ describe Api::ScoresController do
       it "score create" do
         post :create, params: params
         post_update = Post.find_by(id: post_first.id)
-        expect(json_response).to eql post_update.avg_score
+        expect(json_response[:avg_score]).to eql post_update.avg_score
       end
 
       it "has a 200 status code" do
