@@ -85,7 +85,7 @@ describe Api::PostsController do
     end
   end
 
-  describe "POST top" do
+  describe "GET top" do
     let!(:user) { create(:user) }
     let!(:post_first) { create(:post, user: user, avg_score: 4) }
     let!(:post_next) { create(:post, user: user, avg_score: 5) }
@@ -94,12 +94,12 @@ describe Api::PostsController do
 
     context "posts are founded" do
       it "post on page" do
-        post :top, params: params
+        get :top, params: params
         expect(json_response.first).to eql(title: post_next.title, body: post_next.body)
       end
 
       it "has a 200 status code" do
-        post :top, params: params
+        get :top, params: params
         expect(response.status).to eq(200)
       end
     end
@@ -108,12 +108,12 @@ describe Api::PostsController do
       let(:params) { nil }
 
       it "post is not on page" do
-        post :top, params: params
+        get :top, params: params
         expect(json_response[:data]).to be nil
       end
 
       it "has a 422 status code" do
-        post :top, params: params
+        get :top, params: params
         expect(response.status).to eq(422)
       end
     end
