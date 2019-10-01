@@ -12,7 +12,7 @@ describe Post::Ip do
       result = Post::Ip.new.run
       expect(result.success?).to eq(true)
       expect(result.data.first[:ip]).to eq('192.168.0.1')
-      expect(result.data.first[:users]).to eq([user.id, user_next.id])
+      expect(result.data.first[:users]).to eq([user.login, user_next.login])
     end
   end
   context 'ip has one user' do

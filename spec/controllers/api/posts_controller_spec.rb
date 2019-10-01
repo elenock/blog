@@ -18,7 +18,7 @@ describe Api::PostsController do
         it 'posts has be on page' do
           get :ip
           expect(json_response.first[:ip]).to eql post[:ip]
-          expect(json_response.first[:users]).to eq([user.id, user_next.id])
+          expect(json_response.first[:users]).to eq([user.login, user_next.login])
         end
       end
 

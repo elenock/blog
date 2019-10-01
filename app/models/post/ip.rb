@@ -14,28 +14,33 @@ class Post::Ip < AbstractService
     tmp = ActiveRecord::Base.connection.execute(
       sanitize_sql(
         <<-SQL
-          SELECT DISTINCT
-            ip,
-            user_id
-            FROM (
-              SELECT
-                ip,
-                user_id,
-                last_value(Row) OVER(PARTITION BY ip ORDER BY ip asc) as Count
-                FROM(
-                  SELECT
+        SELECT
+        table4.ip,
+        users.login
+        FROM(
+        SELECT DISTINCT
                     ip,
-                    user_id,
-                    ROW_NUMBER() OVER(PARTITION BY ip ORDER BY ip asc )AS Row
+                    user_id
                     FROM (
-                      SELECT DISTINCT
+                      SELECT
                         ip,
-                        user_id
-                        FROM posts ORDER BY ip
-                    ) as table1
-                ) as table2
-              ) as table3
-              WHERE (Count > 1) ORDER BY ip;
+                        user_id,
+                        last_value(Row) OVER(PARTITION BY ip ORDER BY ip asc) as Count
+                        FROM(
+                          SELECT
+                            ip,
+                            user_id,
+                            ROW_NUMBER() OVER(PARTITION BY ip ORDER BY ip asc )AS Row
+                            FROM (
+                              SELECT DISTINCT
+                                ip,
+                                user_id
+                                FROM posts ORDER BY ip
+                            ) as table1
+                        ) as table2
+                      ) as table3
+                      WHERE (Count > 1) ) as table4
+        INNER JOIN users ON table4 .user_id = users.id ORDER BY ip;
         SQL
       )
     )
@@ -48,12 +53,12 @@ class Post::Ip < AbstractService
 
     tmp.map do |string|
       if ip != string['ip'] || last == string
-        user_data << string['user_id'] if last == string
+        user_data << string['login'] if last == string
         ip_data << { ip: ip, users: user_data }
         user_data = []
         ip = string['ip']
       end
-      user_data << string['user_id']
+      user_data << string['login']
     end
 
     AbstractService::SuccesResult.new(ip_data)
