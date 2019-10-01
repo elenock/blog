@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Api::PostsController do
   describe 'GET ip' do
     context 'product exist' do
@@ -6,7 +8,6 @@ describe Api::PostsController do
       let!(:post) { create(:post, user: user, ip: '192.168.0.1') }
       let!(:post_next) { create(:post, user: user_next, ip: '192.168.0.1') }
       let!(:post_last) { create(:post, user: user, ip: '192.168.0.2') }
-
 
       context 'ip has many users' do
         it 'has a 200 status code' do
@@ -78,7 +79,6 @@ describe Api::PostsController do
       end
 
       it 'has a 422 status code' do
-
         post :create, params: params
         expect(response.status).to eq(422)
       end

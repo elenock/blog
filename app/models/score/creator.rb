@@ -23,6 +23,7 @@ class Score::Creator < AbstractService
         post_update!(score)
       end
     end
+    post = Post.find_by(id: post_id)
     AbstractService::SuccesResult.new(post.avg_score)
   end
 
