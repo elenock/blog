@@ -12,19 +12,20 @@ class Score::Creator < AbstractService
   end
 
   def run
-    return AbstractService::FailResult.new("score invalid") unless valid?
+    ActiveRecord::Base.with_advisory_lock("add-score-for-#{post_id}") do
 
-    post = Post.find_by(id: post_id)
-    return AbstractService::FailResult.new("post_does_not_exist") unless post
+      return AbstractService::FailResult.new("score invalid") unless valid?
 
-    ActiveRecord::Base.with_advisory_lock("add-score-for--#{post.id}") do
-      ActiveRecord::Base.transaction do
-        post.scores.create!(post_id: post.id, level: level)
-        post_update
-      end
+      post = Post.find_by(id: post_id)
+      return AbstractService::FailResult.new("post_does_not_exist") unless post
+
+        ActiveRecord::Base.transaction do
+          post.scores.create!(post_id: post.id, level: level)
+          post_update
+        end
+      post = Post.find_by(id: post_id)
+      AbstractService::SuccesResult.new({ 'avg_score' => post.avg_score })
     end
-    post = Post.find_by(id: post_id)
-    AbstractService::SuccesResult.new({ 'avg_score' => post.avg_score })
   end
 
   def post_update
