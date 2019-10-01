@@ -20,9 +20,8 @@ describe Score::Creator do
     end
 
     it "post_update with score create" do
-      # let!(:score) { { post_id: post.id, level: 5 } }
       score = Score::Creator.new(params)
-      score.post_update!
+      score.post_update
       post_update = Post.find_by(id: score.post_id)
       expect(post_update.avg_score).not_to eq(post.avg_score)
     end
